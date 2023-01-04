@@ -20,10 +20,8 @@ interface CharProps {
 
 export default function Chart() {
   const { coinId } = useOutletContext<CharProps>();
-  const { isLoading, data } = useQuery<IHistorical[]>(
-    ['ohlcv', coinId],
-    () => fetchCoinHistory(coinId),
-    { refetchInterval: 10000 }
+  const { isLoading, data } = useQuery<IHistorical[]>(['ohlcv', coinId], () =>
+    fetchCoinHistory(coinId)
   );
 
   return (
@@ -60,9 +58,8 @@ export default function Chart() {
             },
             xaxis: {
               labels: { show: false },
-              type: 'datetime',
               categories: data?.map((price) =>
-                new Date(+price.time_close * 1000).toISOString()
+                String(+price.time_close * 1000)
               ) as string[],
             },
             fill: {

@@ -1,6 +1,5 @@
-import { useQueries, useQuery } from '@tanstack/react-query';
+import { useQueries } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
-import { Helmet } from 'react-helmet';
 import { Link, useMatch } from 'react-router-dom';
 import {
   Outlet,
@@ -13,7 +12,7 @@ import styled from 'styled-components';
 import { fetchCoinInfo, fetchCoinTickers } from './api';
 
 type RoutesParams = {
-  coinId: string;
+  coinId: string | undefined;
 };
 
 interface RouteState {
@@ -123,7 +122,7 @@ interface PriceData {
   first_data_at: string;
   last_updated: string;
   quotes: {
-    USD: {
+    USE: {
       ath_date: string;
       ath_price: number;
       market_cap: number;
@@ -151,27 +150,37 @@ export default function Coin() {
 
   const priceMatch = useMatch('/:coinId/price');
   const chartMatch = useMatch('/:coinId/chart');
-  const { isLoading: infoLoading, data: infoData } = useQuery<InfoData>(
+  const { isLoading: infoLoading, data: infoData } = useQueries<InfoData>(
     ['info', coinId],
-    () => fetchCoinInfo(coinId ?? '')
+    () => fetchCoinInfo(coinId)
   );
-  const { isLoading: tickersLoading, data: tickersData } = useQuery<PriceData>(
+  const { isLoading: tickersLoading, data: tickerData } = useQueries<PriceData>(
     ['tickers', coinId],
-    () => fetchCoinTickers(coinId ?? ''),
-    { refetchInterval: 4000 }
+    () => fetchCoinTickers(coinId)
   );
+  // const [info, setInfo] = useState<InfoData>();
+  // const [priceInfo, setPriceInfo] = useState<PriceData>();
+  // const [loading, setLoading] = useState(true);
+  // useEffect(() => {
+  //   (async () => {
+  //     const infoData = await (
+  //       await fetch(`https://api.coinpaprika.com/v1/coins/${coinId}`)
+  //     ).json();
+  //     const priceData = await (
+  //       await fetch(`https://api.coinpaprika.com/v1/tickers/${coinId}`)
+  //     ).json();
 
-  const loading = infoLoading || tickersLoading;
+  //     setInfo(infoData);
+  //     setPriceInfo(priceData);
+  //     setLoading(false);
+  //   })();
+  // }, [coinId]);
+
   return (
     <Container>
-      <Helmet>
-        <title>
-          {state?.name ? state.name : loading ? 'Loading...' : infoData?.name}
-        </title>
-      </Helmet>
       <Header>
         <Title>
-          {state?.name ? state.name : loading ? 'Loading...' : infoData?.name}
+          {state?.name ? state.name : isLoading ? 'Loading...' : infoData?.name}
         </Title>
       </Header>
 
@@ -189,19 +198,19 @@ export default function Coin() {
               <span>${infoData?.symbol}</span>
             </OverviewItem>
             <OverviewItem>
-              <span>price:</span>
-              <span>{tickersData?.quotes.USD.price.toFixed(3)}</span>
+              <span>Open Source:</span>
+              <span>{infoData?.open_source ? 'Yes' : 'No'}</span>
             </OverviewItem>
           </Overview>
           <Description>{infoData?.description}</Description>
           <Overview>
             <OverviewItem>
               <span>Total Suply:</span>
-              <span>{tickersData?.total_supply}</span>
+              <span>{priceInfo?.total_supply}</span>
             </OverviewItem>
             <OverviewItem>
               <span>Max Supply:</span>
-              <span>{tickersData?.max_supply}</span>
+              <span>{priceInfo?.max_supply}</span>
             </OverviewItem>
           </Overview>
           <Tabs>
@@ -213,7 +222,7 @@ export default function Coin() {
             </Tab>
           </Tabs>
 
-          <Outlet context={{ coinId }} />
+          <Outlet />
         </>
       )}
     </Container>

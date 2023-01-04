@@ -1,6 +1,5 @@
 import { useQueries, useQuery } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
-import { Helmet } from 'react-helmet';
 import { Link, useMatch } from 'react-router-dom';
 import {
   Outlet,
@@ -123,7 +122,7 @@ interface PriceData {
   first_data_at: string;
   last_updated: string;
   quotes: {
-    USD: {
+    USE: {
       ath_date: string;
       ath_price: number;
       market_cap: number;
@@ -157,18 +156,28 @@ export default function Coin() {
   );
   const { isLoading: tickersLoading, data: tickersData } = useQuery<PriceData>(
     ['tickers', coinId],
-    () => fetchCoinTickers(coinId ?? ''),
-    { refetchInterval: 4000 }
+    () => fetchCoinTickers(coinId ?? '')
   );
+  // const [info, setInfo] = useState<InfoData>();
+  // const [priceInfo, setPriceInfo] = useState<PriceData>();
+  // const [loading, setLoading] = useState(true);
+  // useEffect(() => {
+  //   (async () => {
+  //     const infoData = await (
+  //       await fetch(`https://api.coinpaprika.com/v1/coins/${coinId}`)
+  //     ).json();
+  //     const priceData = await (
+  //       await fetch(`https://api.coinpaprika.com/v1/tickers/${coinId}`)
+  //     ).json();
 
+  //     setInfo(infoData);
+  //     setPriceInfo(priceData);
+  //     setLoading(false);
+  //   })();
+  // }, [coinId]);
   const loading = infoLoading || tickersLoading;
   return (
     <Container>
-      <Helmet>
-        <title>
-          {state?.name ? state.name : loading ? 'Loading...' : infoData?.name}
-        </title>
-      </Helmet>
       <Header>
         <Title>
           {state?.name ? state.name : loading ? 'Loading...' : infoData?.name}
@@ -189,8 +198,8 @@ export default function Coin() {
               <span>${infoData?.symbol}</span>
             </OverviewItem>
             <OverviewItem>
-              <span>price:</span>
-              <span>{tickersData?.quotes.USD.price.toFixed(3)}</span>
+              <span>Open Source:</span>
+              <span>{infoData?.open_source ? 'Yes' : 'No'}</span>
             </OverviewItem>
           </Overview>
           <Description>{infoData?.description}</Description>
@@ -213,7 +222,7 @@ export default function Coin() {
             </Tab>
           </Tabs>
 
-          <Outlet context={{ coinId }} />
+          <Outlet />
         </>
       )}
     </Container>

@@ -5,7 +5,7 @@ import App from './App';
 import { ThemeProvider } from 'styled-components';
 import { theme } from './theme';
 import Router from './Router';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { QueryClient } from '@tanstack/react-query';
 
 const queryClient = new QueryClient();
 
@@ -14,10 +14,8 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <React.StrictMode>
-    <QueryClientProvider client={queryClient}>
-      <ThemeProvider theme={theme}>
-        <App />
-      </ThemeProvider>
-    </QueryClientProvider>
+    <ThemeProvider theme={theme}>
+      <App />
+    </ThemeProvider>
   </React.StrictMode>
 );

@@ -13,7 +13,7 @@ export default function Router() {
           <Route path={`price`} element={<Price />} />
           <Route path={`chart`} element={<Chart />} />
         </Route>
-        <Route path='/' element={<Coins />}></Route>
+        <Route path='/' element={<CoinsFetch />}></Route>
       </Routes>
     </BrowserRouter>
   );

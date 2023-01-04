@@ -1,5 +1,5 @@
 import { createGlobalStyle } from 'styled-components';
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import { ReactQueryDevtools } from 'react-query/devtools';
 import Router from './Router';
 
 const GlobalStyle = createGlobalStyle`

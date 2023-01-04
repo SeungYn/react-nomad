@@ -20,12 +20,10 @@ interface CharProps {
 
 export default function Chart() {
   const { coinId } = useOutletContext<CharProps>();
-  const { isLoading, data } = useQuery<IHistorical[]>(
-    ['ohlcv', coinId],
-    () => fetchCoinHistory(coinId),
-    { refetchInterval: 10000 }
+  const { isLoading, data } = useQuery<IHistorical[]>(['ohlcv', coinId], () =>
+    fetchCoinHistory(coinId)
   );
-
+  console.log(data);
   return (
     <div>
       {isLoading ? (
@@ -35,7 +33,7 @@ export default function Chart() {
           type='line'
           series={[
             {
-              name: 'price',
+              name: 'sales',
               data: data?.map((price) => +price.close) as number[],
             },
           ]}
@@ -46,32 +44,6 @@ export default function Chart() {
             chart: {
               height: 500,
               width: 500,
-              toolbar: {
-                show: false,
-              },
-            },
-            grid: { show: false },
-            stroke: {
-              curve: 'smooth',
-              width: 5,
-            },
-            yaxis: {
-              show: false,
-            },
-            xaxis: {
-              labels: { show: false },
-              type: 'datetime',
-              categories: data?.map((price) =>
-                new Date(+price.time_close * 1000).toISOString()
-              ) as string[],
-            },
-            fill: {
-              type: 'gradient',
-              gradient: { gradientToColors: ['blue'], stops: [0, 100] },
-            },
-            colors: ['red'],
-            tooltip: {
-              y: { formatter: (value) => `$${value.toFixed(3)}` },
             },
           }}
         />

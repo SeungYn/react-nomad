@@ -20,10 +20,8 @@ interface CharProps {
 
 export default function Chart() {
   const { coinId } = useOutletContext<CharProps>();
-  const { isLoading, data } = useQuery<IHistorical[]>(
-    ['ohlcv', coinId],
-    () => fetchCoinHistory(coinId),
-    { refetchInterval: 10000 }
+  const { isLoading, data } = useQuery<IHistorical[]>(['ohlcv', coinId], () =>
+    fetchCoinHistory(coinId)
   );
 
   return (

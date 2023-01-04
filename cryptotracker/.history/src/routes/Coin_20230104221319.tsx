@@ -1,6 +1,5 @@
 import { useQueries, useQuery } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
-import { Helmet } from 'react-helmet';
 import { Link, useMatch } from 'react-router-dom';
 import {
   Outlet,
@@ -164,11 +163,6 @@ export default function Coin() {
   const loading = infoLoading || tickersLoading;
   return (
     <Container>
-      <Helmet>
-        <title>
-          {state?.name ? state.name : loading ? 'Loading...' : infoData?.name}
-        </title>
-      </Helmet>
       <Header>
         <Title>
           {state?.name ? state.name : loading ? 'Loading...' : infoData?.name}
