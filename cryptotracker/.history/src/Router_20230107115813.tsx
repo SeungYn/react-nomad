@@ -7,7 +7,6 @@ import Price from './routes/Price';
 
 interface IRouterProps {
   toggleDark: () => void;
-  isDark: boolean;
 }
 
 export default function Router() {

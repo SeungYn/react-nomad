@@ -80,7 +80,7 @@ function App() {
   console.log(isDark);
   return (
     <>
-      <ThemeProvider theme={isDark ? darkTheme : lightTheme}>
+      <ThemeProvider theme={true ? darkTheme : lightTheme}>
         <GlobalStyle />
         <Router />
         <ReactQueryDevtools />

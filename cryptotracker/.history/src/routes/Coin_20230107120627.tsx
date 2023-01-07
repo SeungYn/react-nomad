@@ -152,7 +152,7 @@ interface ICoinProps {
 export default function Coin() {
   const { coinId } = useParams<RoutesParams>();
   const { state } = useLocation() as RouteState;
-  console.log('coin');
+
   const priceMatch = useMatch('/:coinId/price');
   const chartMatch = useMatch('/:coinId/chart');
   const { isLoading: infoLoading, data: infoData } = useQuery<InfoData>(

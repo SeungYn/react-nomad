@@ -72,7 +72,7 @@ interface ICoinsProps {
 
 export default function Coins() {
   const setDarkAtom = useSetRecoilState(isDarkAtom);
-  const toggleDarkAtom = () => setDarkAtom((prev) => !prev);
+  const { isLoading, data } = () => setDarkAtom((prev) => !prev);
   const { isLoading, data } = useQuery<CoinInterface[]>(
     ['allCoins'],
     fetchCoins
@@ -82,7 +82,16 @@ export default function Coins() {
     <Container>
       <Header>
         <Title>코인</Title>
-        <button onClick={toggleDarkAtom}>Toggle Mode</button>
+        <button
+          onClick={() =>
+            setterFn((v) => {
+              console.log(v);
+              return !v;
+            })
+          }
+        >
+          Toggle Mode
+        </button>
       </Header>
 
       {isLoading ? (

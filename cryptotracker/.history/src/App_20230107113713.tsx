@@ -3,8 +3,6 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import Router from './Router';
 import { darkTheme, lightTheme } from './theme';
 import { useState } from 'react';
-import { useRecoilValue } from 'recoil';
-import { isDarkAtom } from './routes/atoms';
 
 const GlobalStyle = createGlobalStyle`
 @import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400&display=swap');
@@ -76,11 +74,10 @@ a{
 `;
 
 function App() {
-  const isDark = useRecoilValue(isDarkAtom);
-  console.log(isDark);
+  const [isDark, setIsDark] = useState(false);
   return (
     <>
-      <ThemeProvider theme={isDark ? darkTheme : lightTheme}>
+      <ThemeProvider theme={darkTheme}>
         <GlobalStyle />
         <Router />
         <ReactQueryDevtools />
