@@ -50,6 +50,7 @@ function ToDoList() {
     }
   );
   const onValid = (data: IForm) => {
+    console.log('괜찮아요!');
     if (data.password1 !== data.password2) {
       setError(
         'password1',
@@ -57,7 +58,7 @@ function ToDoList() {
         { shouldFocus: true }
       );
     }
-    setError('extraError', { message: 'Server offline' });
+    //setError('extraError', { message: 'Server offline' });
   };
   console.log(formState.errors);
   return (
