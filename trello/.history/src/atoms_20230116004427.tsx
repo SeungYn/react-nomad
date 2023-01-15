@@ -17,7 +17,6 @@ const localStorageEffect: <T>(key: string) => AtomEffect<T> =
       setSelf(JSON.parse(savedValue));
     }
     onSet((newValue, _, isReset) => {
-      console.log(newValue, _, isReset);
       isReset
         ? localStorage.removeItem(key)
         : localStorage.setItem(key, JSON.stringify(newValue));
@@ -51,5 +50,5 @@ export const toDoState = atom<IToDoState>({
     done1: [],
     done2: [],
   },
-  effects: [localStorageEffect('test')],
+  effects: [],
 });

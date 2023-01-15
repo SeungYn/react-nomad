@@ -16,7 +16,7 @@ import Board from './Components/Board';
 
 const Wrapper = styled.div`
   display: flex;
-
+  max-width: 480px;
   width: 100%;
   margin: 0 auto;
   justify-content: center;
@@ -29,7 +29,7 @@ const Boards = styled.div`
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  flex-wrap: wrap;
+
   gap: 10px;
 `;
 
@@ -37,7 +37,6 @@ function App() {
   const [toDos, setToDos] = useRecoilState(toDoState);
   const onDragEnd = (info: DropResult) => {
     const { destination, draggableId, source } = info;
-    console.log(info);
     if (destination?.droppableId === source.droppableId) {
       setToDos((oldToDos) => {
         const boardCopy = [...oldToDos[source.droppableId]];

@@ -16,7 +16,7 @@ import Board from './Components/Board';
 
 const Wrapper = styled.div`
   display: flex;
-
+  max-width: 480px;
   width: 100%;
   margin: 0 auto;
   justify-content: center;
@@ -29,7 +29,7 @@ const Boards = styled.div`
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  flex-wrap: wrap;
+
   gap: 10px;
 `;
 
@@ -37,30 +37,22 @@ function App() {
   const [toDos, setToDos] = useRecoilState(toDoState);
   const onDragEnd = (info: DropResult) => {
     const { destination, draggableId, source } = info;
-    console.log(info);
     if (destination?.droppableId === source.droppableId) {
       setToDos((oldToDos) => {
         const boardCopy = [...oldToDos[source.droppableId]];
-        const taskObj = boardCopy[source.index];
         boardCopy.splice(source.index, 1);
-        boardCopy.splice(destination?.index, 0, taskObj);
+        boardCopy.splice(destination?.index, 0, draggableId);
         return { ...oldToDos, [source.droppableId]: boardCopy };
       });
     } else {
       setToDos((oldToDos) => {
         const sourceToDos = [...oldToDos[source.droppableId]];
-        const taskObj = sourceToDos[source.index];
         sourceToDos.splice(source.index, 1);
         const destinationToDos = [...oldToDos[destination!.droppableId]];
-        destinationToDos.splice(destination!.index, 0, taskObj);
-        return {
-          ...oldToDos,
-          [source.droppableId]: sourceToDos,
-          [destination!.droppableId]: destinationToDos,
-        };
+        destinationToDos.splice(destination!.index, 0, source.droppableId);
+        return { ...oldToDos, [source.droppableId]: sourceToDos };
       });
     }
-    if (!destination) return;
   };
   return (
     <DragDropContext onDragEnd={onDragEnd}>

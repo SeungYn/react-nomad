@@ -3,8 +3,7 @@ import DragabbleCard from './DragabbleCard';
 import styled from 'styled-components';
 import { useRef } from 'react';
 import { useForm } from 'react-hook-form';
-import { ITodo, IToDoState, toDoState } from '../atoms';
-import { useRecoilState } from 'recoil';
+import { ITodo } from '../atoms';
 
 interface IboardProps {
   toDos: ITodo[];
@@ -23,18 +22,8 @@ const Form = styled.form`
 
 function Board({ toDos, boardId }: IboardProps) {
   const { register, setValue, handleSubmit } = useForm<IForm>();
-  const [todos, setTodos] = useRecoilState<IToDoState>(toDoState);
-
   const onValid = (data: IForm) => {
-    const newToDo = {
-      id: Date.now(),
-      text: data.toDo,
-    };
-    setTodos((oldToDos) => ({
-      ...oldToDos,
-      [boardId]: [...oldToDos[boardId], newToDo],
-    }));
-
+    console.log(data);
     setValue('toDo', '');
   };
 
@@ -57,12 +46,7 @@ function Board({ toDos, boardId }: IboardProps) {
             {...magic.droppableProps}
           >
             {toDos.map((toDo, index) => (
-              <DragabbleCard
-                key={toDo.id}
-                index={index}
-                toDoId={toDo.id}
-                toDoText={toDo.text}
-              />
+              <DragabbleCard key={toDo.id} index={index} todo={toDo} />
             ))}
             {magic.placeholder}
           </Area>

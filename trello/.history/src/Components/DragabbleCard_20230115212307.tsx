@@ -3,15 +3,15 @@ import { Draggable } from 'react-beautiful-dnd';
 import styled from 'styled-components';
 
 interface IDragabbleCardProps {
-  toDoId: number;
-  toDoText: string;
+  todo: string;
   index: number;
 }
 
-function DraggbleCard({ toDoId, toDoText, index }: IDragabbleCardProps) {
+function DraggbleCard({ todo, index }: IDragabbleCardProps) {
   return (
-    <Draggable key={toDoId} draggableId={toDoId.toString()} index={index}>
+    <Draggable key={todo} draggableId={todo} index={index}>
       {(magic, snapshot) => {
+        console.log(snapshot);
         return (
           <Card
             isDragging={snapshot.isDragging}
@@ -19,7 +19,7 @@ function DraggbleCard({ toDoId, toDoText, index }: IDragabbleCardProps) {
             {...magic.draggableProps}
             {...magic.dragHandleProps}
           >
-            {toDoText}
+            {todo}
           </Card>
         );
       }}
@@ -34,7 +34,7 @@ const Card = styled.div<{ isDragging: boolean }>`
   padding: 5px 10px;
   margin-bottom: 5px;
   background-color: ${(props) =>
-    props.isDragging ? '#74b9ff' : props.theme.cardColor};
+    props.isDragging ? 'tomato' : props.theme.cardColor};
   user-select: none;
-  box-shadow: ${(props) => (props.isDragging ? '0px 2px 25px  black' : 'none')};
+  box-shadow: ${(props) => (props.isDragging ? '2px 2px 2px black' : 'none')};
 `;

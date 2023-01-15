@@ -24,7 +24,7 @@ const Form = styled.form`
 function Board({ toDos, boardId }: IboardProps) {
   const { register, setValue, handleSubmit } = useForm<IForm>();
   const [todos, setTodos] = useRecoilState<IToDoState>(toDoState);
-
+  console.log(todos, setTodos);
   const onValid = (data: IForm) => {
     const newToDo = {
       id: Date.now(),
@@ -32,7 +32,7 @@ function Board({ toDos, boardId }: IboardProps) {
     };
     setTodos((oldToDos) => ({
       ...oldToDos,
-      [boardId]: [...oldToDos[boardId], newToDo],
+      [boardId]: oldToDos[boardId].push(newToDo),
     }));
 
     setValue('toDo', '');

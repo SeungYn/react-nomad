@@ -4,13 +4,13 @@ import styled from 'styled-components';
 
 interface IDragabbleCardProps {
   toDoId: number;
-  toDoText: string;
+  todoText: string;
   index: number;
 }
 
-function DraggbleCard({ toDoId, toDoText, index }: IDragabbleCardProps) {
+function DraggbleCard({ todo, index }: IDragabbleCardProps) {
   return (
-    <Draggable key={toDoId} draggableId={toDoId.toString()} index={index}>
+    <Draggable key={todo} draggableId={todo} index={index}>
       {(magic, snapshot) => {
         return (
           <Card
@@ -19,7 +19,7 @@ function DraggbleCard({ toDoId, toDoText, index }: IDragabbleCardProps) {
             {...magic.draggableProps}
             {...magic.dragHandleProps}
           >
-            {toDoText}
+            {todo}
           </Card>
         );
       }}

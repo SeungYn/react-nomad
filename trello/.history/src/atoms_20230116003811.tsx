@@ -1,4 +1,4 @@
-import { atom, AtomEffect, selector } from 'recoil';
+import { atom, selector } from 'recoil';
 
 export interface ITodo {
   id: number;
@@ -9,35 +9,20 @@ export interface IToDoState {
   [key: string]: ITodo[];
 }
 
-const localStorageEffect: <T>(key: string) => AtomEffect<T> =
+const localStorageEffect =
   (key: string) =>
   ({ setSelf, onSet }) => {
     const savedValue = localStorage.getItem(key);
     if (savedValue != null) {
       setSelf(JSON.parse(savedValue));
     }
+
     onSet((newValue, _, isReset) => {
-      console.log(newValue, _, isReset);
       isReset
         ? localStorage.removeItem(key)
         : localStorage.setItem(key, JSON.stringify(newValue));
     });
   };
-
-// const localStorageEffect =
-//   <T>(key: string) =>
-//   ({ setSelf, onSet }) => {
-//     const savedValue = localStorage.getItem(key);
-//     if (savedValue != null) {
-//       setSelf(JSON.parse(savedValue));
-//     }
-
-//     onSet((newValue, _, isReset) => {
-//       isReset
-//         ? localStorage.removeItem(key)
-//         : localStorage.setItem(key, JSON.stringify(newValue));
-//     });
-//   };
 
 export const toDoState = atom<IToDoState>({
   key: 'toDo',
@@ -51,5 +36,5 @@ export const toDoState = atom<IToDoState>({
     done1: [],
     done2: [],
   },
-  effects: [localStorageEffect('test')],
+  effects: [],
 });
