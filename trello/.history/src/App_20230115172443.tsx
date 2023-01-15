@@ -27,7 +27,6 @@ const Boards = styled.div`
   display: grid;
   width: 100%;
   grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
 `;
 
 function App() {
@@ -47,7 +46,7 @@ function App() {
       <Wrapper>
         <Boards>
           {Object.keys(toDos).map((i) => (
-            <Board key={i} toDos={toDos[i]} boardId={i} />
+            <Board toDos={toDos[i]} boardId={i} />
           ))}
         </Boards>
       </Wrapper>

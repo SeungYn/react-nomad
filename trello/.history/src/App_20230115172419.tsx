@@ -23,11 +23,12 @@ const Wrapper = styled.div`
   height: 100vh;
 `;
 
+
+
 const Boards = styled.div`
   display: grid;
   width: 100%;
   grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
 `;
 
 function App() {
@@ -35,20 +36,18 @@ function App() {
   const onDragEnd = ({ destination, source, draggableId }: DropResult) => {
     const desIndex = destination?.index;
     const srcIndex = source.index;
-    // setToDos((todos) => {
-    //   const copy = [...todos];
-    //   copy.splice(srcIndex, 1);
-    //   copy.splice(desIndex!, 0, draggableId);
-    //   return copy;
-    // });
+    setToDos((todos) => {
+      const copy = [...todos];
+      copy.splice(srcIndex, 1);
+      copy.splice(desIndex!, 0, draggableId);
+      return copy;
+    });
   };
   return (
     <DragDropContext onDragEnd={onDragEnd}>
       <Wrapper>
         <Boards>
-          {Object.keys(toDos).map((i) => (
-            <Board key={i} toDos={toDos[i]} boardId={i} />
-          ))}
+          {Object.keys(toDos).map(i)=><Board toDos={toDos[i]} boardId={i} />}
         </Boards>
       </Wrapper>
     </DragDropContext>

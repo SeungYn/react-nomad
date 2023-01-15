@@ -27,7 +27,7 @@ const Boards = styled.div`
   display: grid;
   width: 100%;
   grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
+  gap: 10;
 `;
 
 function App() {
